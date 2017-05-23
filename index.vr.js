@@ -8,7 +8,11 @@ import {
   Video,
   VideoControl,
   MediaPlayerState,
+  CylindricalPanel,
+  Image,
 } from 'react-vr';
+
+
 
 
 
@@ -28,6 +32,40 @@ export default class WelcomeToVR extends React.Component {
           flex: 1,
           flexDirection: 'row',
         }}>
+          <CylindricalPanel layer={{width: 2200, height: 900}}>
+            <View
+              style={{
+                opacity: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  margin: 10,
+                  fontSize: 70,
+                  fontWeight: '300',
+                  borderRadius: 20,
+                  backgroundColor: 'grey',
+                }}
+              >
+                Hello
+              </Text>
+
+              <Image
+                style={{
+                  borderRadius: 20,
+                  backgroundColor: 'red',
+                  borderWidth: 10,
+                  width: 600,
+                  height: 315,
+                }}
+                source={{
+                  uri: 'https://facebook.github.io/react/img/logo_og.png',
+                }}
+              />
+            </View>
+          </CylindricalPanel>
 
           <View
             style={{
