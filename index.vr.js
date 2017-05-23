@@ -10,6 +10,7 @@ import {
   MediaPlayerState,
   CylindricalPanel,
   Image,
+  Model
 } from 'react-vr';
 
 
@@ -17,12 +18,32 @@ import {
 
 
 export default class WelcomeToVR extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       playerState: new MediaPlayerState({autoPlay: true, muted: true}), // init with muted, autoPlay
+      rotation: 200,
+      zoom: -300,
     };
+    this.lastUpdate = Date.now();
   }
+
+  componentDidMount() {
+    this.rotate();
+  }
+
+  rotate = ()  => {
+    const now = Date.now();
+    const delta = now - this.lastUpdate;
+    this.lastUpdate = now;
+
+    this.setState({
+      rotation: this.state.rotation + delta / 150
+    });
+    this.frameHandle = requestAnimationFrame(this.rotate);
+  }
+
 
   render() {
     return (
@@ -108,9 +129,31 @@ export default class WelcomeToVR extends React.Component {
             </View>
           </View>
         </View>
+        <Model
+          style={{
+            transform: [
+              {scale: 0.05 },
+              {rotateY: this.state.rotation},
+            ],
+          }}
+
+          source={{
+            obj: asset('lego.obj'),
+            mtl: asset('lego.mtl'),
+          }}
+        />
       </View>
     );
   }
 };
 
 AppRegistry.registerComponent('WelcomeToVR', () => WelcomeToVR);
+
+
+/*
+ {translate: [-25, 0, this.state.zoom]},
+ {scale: 0.05 },
+ {rotateY: this.state.rotation},
+ {rotateX: 20},
+ {rotateZ: -10}
+ */
